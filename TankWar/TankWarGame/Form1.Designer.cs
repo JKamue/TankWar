@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tbxIpAdress = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
@@ -36,8 +37,7 @@
             this.nbxServerPort = new System.Windows.Forms.NumericUpDown();
             this.lblMyPort = new System.Windows.Forms.Label();
             this.nbxOwnPort = new System.Windows.Forms.NumericUpDown();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnDisconnect = new System.Windows.Forms.Button();
+            this.pnlGame = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbxServerPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nbxOwnPort)).BeginInit();
@@ -58,6 +58,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 37);
             this.panel1.TabIndex = 0;
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Location = new System.Drawing.Point(642, 10);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(94, 23);
+            this.btnDisconnect.TabIndex = 6;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
             // label2
             // 
@@ -148,30 +158,20 @@
             0,
             0});
             // 
-            // panel2
+            // pnlGame
             // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 37);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(800, 413);
-            this.panel2.TabIndex = 1;
-            // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.Location = new System.Drawing.Point(642, 10);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(94, 23);
-            this.btnDisconnect.TabIndex = 6;
-            this.btnDisconnect.Text = "Disconnect";
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGame.Location = new System.Drawing.Point(0, 37);
+            this.pnlGame.Name = "pnlGame";
+            this.pnlGame.Size = new System.Drawing.Size(800, 413);
+            this.pnlGame.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pnlGame);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "TankWar";
@@ -191,7 +191,7 @@
         private System.Windows.Forms.NumericUpDown nbxServerPort;
         private System.Windows.Forms.Label lblMyPort;
         private System.Windows.Forms.NumericUpDown nbxOwnPort;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlGame;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxIpAdress;
         private System.Windows.Forms.Button btnDisconnect;
