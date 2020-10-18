@@ -28,9 +28,12 @@ namespace TankWarGame
         public Form1()
         {
             InitializeComponent();
-            KeepAlive.Interval = 700;
+            KeepAlive.Interval = 50;
             KeepAlive.Tick += SendKeepAlive;
             screenController = new BufferedScreenController(pnlGame, Color.White);
+            KeyPreview = true;
+            KeyDown += KeyStatus.KeyDownHandler;
+            KeyUp += KeyStatus.KeyUpHander;
         }
 
         public void MessageHandler(object sender, SocketEventArgs s)
@@ -67,6 +70,26 @@ namespace TankWarGame
         {
             var keepAliveMessage = new Message(MessageId.KeepAlive);
             Connection.Send(keepAliveMessage, ServerEndPoint);
+
+            var move = 0;
+            var turn = 0;
+            var turret = 0;
+
+            if (KeyStatus.IsPressed(38))
+                move++;
+
+            if (KeyStatus.IsPressed(40))
+                move--;
+
+            if (KeyStatus.IsPressed(37))
+                turn--;
+
+            if (KeyStatus.IsPressed(39))
+                turn++;
+
+            var movement = new Movement(move, turn, turret);
+            var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));
+            Connection.Send(message, ServerEndPoint);
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -79,13 +102,6 @@ namespace TankWarGame
             btnConnect.Enabled = true;
             Connection.Close();
             Connection = null;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var movement = new Movement(1, 90, 0);
-            var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));
-            Connection.Send(message, ServerEndPoint);
         }
     }
 }

@@ -38,11 +38,9 @@
             this.lblMyPort = new System.Windows.Forms.Label();
             this.nbxOwnPort = new System.Windows.Forms.NumericUpDown();
             this.pnlGame = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbxServerPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nbxOwnPort)).BeginInit();
-            this.pnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -162,22 +160,11 @@
             // 
             // pnlGame
             // 
-            this.pnlGame.Controls.Add(this.button1);
             this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlGame.Location = new System.Drawing.Point(0, 37);
             this.pnlGame.Name = "pnlGame";
             this.pnlGame.Size = new System.Drawing.Size(800, 413);
             this.pnlGame.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(444, 74);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -192,7 +179,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nbxServerPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nbxOwnPort)).EndInit();
-            this.pnlGame.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -209,7 +195,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxIpAdress;
         private System.Windows.Forms.Button btnDisconnect;
-        private System.Windows.Forms.Button button1;
     }
 }
 
