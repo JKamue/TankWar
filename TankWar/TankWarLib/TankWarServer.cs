@@ -64,6 +64,21 @@ namespace TankWarLib
 
             if (s.Message.Id.Equals(MessageId.GameQuit))
                 RemoveClient(s.Client);
+
+            if (s.Message.Id.Equals(MessageId.Movement))
+                SetClientMovement(s.Client, s.Message);
+        }
+
+        private void SetClientMovement(IPEndPoint client, Message message)
+        {
+            var movement = JsonConvert.DeserializeObject<Movement>(message.Content);
+            var id = _clientToId[client];
+            var player = _gameController.Players.Where(p => p.Id == id).ToList();
+
+            if (player.Count == 0)
+                return;
+
+            player[0].SetMovement(movement);
         }
 
         private void ClientJoined(IPEndPoint client)
@@ -96,7 +111,7 @@ namespace TankWarLib
                 test[0].KeepAliveReceived();
         }
 
-        private void LogMessage(string mes, int i = 0)
+        private void LogMessage(string mes)
         {
             if (_debug)
                 Console.WriteLine("Tick " + ticks + ": \t\t" + mes);

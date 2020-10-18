@@ -21,7 +21,7 @@ namespace TankWarLib.Objects
 
         public void Tick()
         {
-
+            Players.ForEach(p => p.Tick());
         }
 
         public void AddNewPlayer(string id)

@@ -50,8 +50,10 @@
     <Compile Include="Dtos\Messages\MessageId.cs" />
     <Compile Include="Objects\Line.cs" />
     <Compile Include="Objects\Map.cs" />
+    <Compile Include="Objects\Movement.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\GameController.cs" />
+    <Compile Include="PointRotator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Socket\SocketClient.cs" />
     <Compile Include="Socket\SocketConnection.cs" />

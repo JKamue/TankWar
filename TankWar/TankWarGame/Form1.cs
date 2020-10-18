@@ -80,5 +80,12 @@ namespace TankWarGame
             Connection.Close();
             Connection = null;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var movement = new Movement(1, 90, 0);
+            var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));
+            Connection.Send(message, ServerEndPoint);
+        }
     }
 }
