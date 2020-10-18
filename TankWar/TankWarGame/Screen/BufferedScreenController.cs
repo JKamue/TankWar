@@ -67,7 +67,7 @@ namespace TankWarGame.Screen
 
         private void DrawObject(Player p)
         {
-            _graphicsBuffer.Graphics.FillRectangle(new SolidBrush(p.Color), new Rectangle(1,1,10,10) );
+            _graphicsBuffer.Graphics.FillRectangle(new SolidBrush(p.Color), new RectangleF(p.Position, new Size(10,10)));
         }
     }
 }
