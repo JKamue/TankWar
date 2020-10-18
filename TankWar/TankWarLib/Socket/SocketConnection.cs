@@ -39,7 +39,7 @@ namespace TankWarLib.Socket
             var message = Message.Deserialize(receivedText);
 
             if (_debug)
-                Console.WriteLine(receivedIpEndPoint + ": " + message.Id);
+                Console.WriteLine(receivedIpEndPoint + ": \tPacket id " + message.Id.Content);
 
             OnMessageReceived?.Invoke(this, new SocketEventArgs(receivedIpEndPoint, message));
 

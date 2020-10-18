@@ -20,9 +20,11 @@ namespace TankWarGame
         {
             var connection = new SocketConnection(50001, true);
             var joinMessage = new Message(MessageId.GameJoined, "");
+            var quitMessage = new Message(MessageId.GameQuit, "");
             var partner = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50000);
             connection.Send(joinMessage, partner);
             connection.OnMessageReceived += MessageHandler;
+            connection.Send(quitMessage, partner);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -17,6 +17,7 @@ namespace TankWarLib
     {
         private readonly GameController _gameController;
         private List<SocketClient> _clients = new List<SocketClient>();
+        private Dictionary<IPEndPoint, string> _clientToId = new Dictionary<IPEndPoint, string>();
         private readonly SocketConnection _connection;
         private readonly Timer _serverTick;
         private readonly bool _debug;
@@ -54,20 +55,22 @@ namespace TankWarLib
 
         public void MessageHandler(object sender, SocketEventArgs s)
         {
-            //var client = _clients.First(c => c.Endpoint.Equals(s.Client));
-            //var envelope = new Envelope(client.Id, s.Message);
 
             if (s.Message.Id.Equals(MessageId.GameJoined))
-                ClientJoined(s.Client); return;
+                ClientJoined(s.Client);
 
-            if (s.Message.Id == MessageId.KeepAlive)
-                KeepAlive(s.Client); return;
+            if (s.Message.Id.Equals(MessageId.KeepAlive))
+                KeepAlive(s.Client);
+
+            if (s.Message.Id.Equals(MessageId.GameQuit))
+                RemoveClient(s.Client);
         }
 
         private void ClientJoined(IPEndPoint client)
         {
             // Store Client
             var socketClient = new SocketClient(client);
+            _clientToId[client] = socketClient.Id;
             _clients.Add(socketClient);
             _gameController.AddNewPlayer(socketClient.Id);
             LogMessage(socketClient.Id + " joined");
@@ -77,12 +80,21 @@ namespace TankWarLib
             _connection.Send(message, client);
         }
 
+        private void RemoveClient(IPEndPoint client)
+        {
+            var clientId = _clientToId[client];
+            _clientToId.Remove(client);
+            _clients.RemoveAll(c => c.Endpoint.Equals(client));
+            _gameController.RemovePlayer(clientId);
+            LogMessage(clientId + " quit");
+        }
+
         private void KeepAlive(IPEndPoint client) => _clients.First(c => c.Endpoint.Equals(client)).KeepAliveReceived();
 
-        private void LogMessage(string mes)
+        private void LogMessage(string mes, int i = 0)
         {
             if (_debug)
-                Console.WriteLine(ticks + ": " + mes);
+                Console.WriteLine("Tick " + ticks + ": \t\t" + mes);
         }
     }
 }
