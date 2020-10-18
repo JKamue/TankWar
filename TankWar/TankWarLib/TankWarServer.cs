@@ -13,25 +13,35 @@ using TankWarLib.Socket;
 
 namespace TankWarLib
 {
-    class TankWarServer
+    public class TankWarServer
     {
         private readonly GameController _gameController;
         private List<SocketClient> _clients = new List<SocketClient>();
         private readonly SocketConnection _connection;
         private readonly Timer _serverTick;
+        private readonly bool _debug;
+        private int ticks = 0;
 
         public TankWarServer(Map map, int port, bool debug = false)
         {
+            _debug = debug;
             _connection = new SocketConnection(port, debug);
             _connection.OnMessageReceived += MessageHandler;
-            _serverTick = new Timer(CalculateTick, new AutoResetEvent(false), 0, 10);
+            _serverTick = new Timer(CalculateTick, new AutoResetEvent(false), 0, 5);
+            _gameController = new GameController(map);
         }
 
         public void CalculateTick(Object stateInfo)
         {
+            ticks++;
             // Remove inactive Clients
             var inactiveClients = _clients.Where(c => !c.Alive()).ToList();
+            _clients.RemoveAll(c => !c.Alive());
             inactiveClients.ForEach(c => _gameController.RemovePlayer(c.Id));
+
+            if(_debug)
+                inactiveClients.ForEach(c => LogMessage(c.Id + " timed out"));
+
 
             // Let Game Controller Calculate Players
             _gameController.Tick();
@@ -44,10 +54,10 @@ namespace TankWarLib
 
         public void MessageHandler(object sender, SocketEventArgs s)
         {
-            var client = _clients.First(c => c.Endpoint.Equals(s.Client));
-            var envelope = new Envelope(client.Id, s.Message);
+            //var client = _clients.First(c => c.Endpoint.Equals(s.Client));
+            //var envelope = new Envelope(client.Id, s.Message);
 
-            if (s.Message.Id == MessageId.GameJoined)
+            if (s.Message.Id.Equals(MessageId.GameJoined))
                 ClientJoined(s.Client); return;
 
             if (s.Message.Id == MessageId.KeepAlive)
@@ -60,6 +70,7 @@ namespace TankWarLib
             var socketClient = new SocketClient(client);
             _clients.Add(socketClient);
             _gameController.AddNewPlayer(socketClient.Id);
+            LogMessage(socketClient.Id + " joined");
 
             // Send Map
             var message = new Message(MessageId.MapData, JsonConvert.SerializeObject(_gameController.Map));
@@ -67,5 +78,11 @@ namespace TankWarLib
         }
 
         private void KeepAlive(IPEndPoint client) => _clients.First(c => c.Endpoint.Equals(client)).KeepAliveReceived();
+
+        private void LogMessage(string mes)
+        {
+            if (_debug)
+                Console.WriteLine(ticks + ": " + mes);
+        }
     }
 }

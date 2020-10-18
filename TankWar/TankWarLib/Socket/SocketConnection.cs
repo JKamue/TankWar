@@ -21,12 +21,19 @@ namespace TankWarLib.Socket
         {
             _udpClient = new UdpClient(myPort);
             _debug = debug;
+            _udpClient.BeginReceive(DataReceived, _udpClient);
         }
 
         public void Send(Message message, IPEndPoint partner)
         {
             var content = message.Serialize();
             _udpClient.Send(Encoding.ASCII.GetBytes(content), content.Length, partner);
+        }
+
+        public void Send(Message message, string hostname, int port)
+        {
+            var content = message.Serialize();
+            _udpClient.Send(Encoding.ASCII.GetBytes(content), content.Length, hostname, port);
         }
 
         private void DataReceived(IAsyncResult ar)
@@ -43,7 +50,7 @@ namespace TankWarLib.Socket
             OnMessageReceived?.Invoke(this, new SocketEventArgs(receivedIpEndPoint, message));
 
             // Restart listening for udp data packages
-            _udpClient.BeginReceive(DataReceived, ar.AsyncState);
+            _udpClient.BeginReceive(DataReceived, _udpClient);
         }
     }
 }

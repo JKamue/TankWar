@@ -10,8 +10,8 @@ namespace TankWarLib.Dtos.Messages
 {
     public class Message
     {
-        public readonly string Content;
-        public readonly MessageId Id;
+        public string Content;
+        public MessageId Id;
 
         public Message(MessageId id, string content = null)
         {

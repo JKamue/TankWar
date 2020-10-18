@@ -37,7 +37,7 @@ namespace TankWarLib.Dtos.Messages
         // Other
         public static readonly MessageId Nothing = new MessageId(18);
 
-        public readonly int Content;
+        public int Content;
 
         public MessageId(int number)
         {

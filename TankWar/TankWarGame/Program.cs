@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TankWarLib.Dtos.Messages;
+using TankWarLib.Socket;
+using Message = TankWarLib.Dtos.Messages.Message;
 
 namespace TankWarGame
 {
@@ -14,9 +18,20 @@ namespace TankWarGame
         [STAThread]
         static void Main()
         {
+            var connection = new SocketConnection(50001, true);
+            var joinMessage = new Message(MessageId.GameJoined, "");
+            connection.Send(joinMessage, "localhost", 50000);
+            connection.OnMessageReceived += MessageHandler;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+        }
+
+        public static void MessageHandler(object sender, SocketEventArgs s)
+        {
+            Console.WriteLine("Received:" + s.Message.Id);
+            Console.WriteLine(s.Message.Content);
         }
     }
 }
