@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TankWarLib", "TankWarLib\Ta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TankWarServer", "TankWarServer\TankWarServer.csproj", "{49BA7D35-6780-4F9D-A790-CBF1240AB15D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TankWarGame", "TankWarGame\TankWarGame.csproj", "{129887B7-BA70-4734-A9EB-53CD7606F0FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49BA7D35-6780-4F9D-A790-CBF1240AB15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49BA7D35-6780-4F9D-A790-CBF1240AB15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49BA7D35-6780-4F9D-A790-CBF1240AB15D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129887B7-BA70-4734-A9EB-53CD7606F0FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129887B7-BA70-4734-A9EB-53CD7606F0FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129887B7-BA70-4734-A9EB-53CD7606F0FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129887B7-BA70-4734-A9EB-53CD7606F0FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
