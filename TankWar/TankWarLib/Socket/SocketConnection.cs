@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TankWarLib.Dtos.Messages;
@@ -33,18 +34,37 @@ namespace TankWarLib.Socket
         private void DataReceived(IAsyncResult ar)
         {
             IPEndPoint receivedIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
-            var receivedBytes = _udpClient.EndReceive(ar, ref receivedIpEndPoint);
 
-            var receivedText = Encoding.ASCII.GetString(receivedBytes);
-            var message = Message.Deserialize(receivedText);
+            try
+            {
+                var receivedBytes = _udpClient.EndReceive(ar, ref receivedIpEndPoint);
 
-            if (_debug)
-                Console.WriteLine(receivedIpEndPoint + ": \tPacket id " + message.Id.Content);
 
-            OnMessageReceived?.Invoke(this, new SocketEventArgs(receivedIpEndPoint, message));
+                var receivedText = Encoding.ASCII.GetString(receivedBytes);
+                var message = Message.Deserialize(receivedText);
+
+                if (_debug)
+                    Console.WriteLine(receivedIpEndPoint + ": \tPacket id " + message.Id.Content);
+
+                OnMessageReceived?.Invoke(this, new SocketEventArgs(receivedIpEndPoint, message));
+            }
+            catch (SocketException e)
+            {
+            }
+            catch (ObjectDisposedException e)
+            {
+                return;
+            }
 
             // Restart listening for udp data packages
             _udpClient.BeginReceive(DataReceived, _udpClient);
+        }
+
+        public void Close()
+        {
+            _udpClient.Client.Shutdown(SocketShutdown.Receive);
+            _udpClient.Client.Close();
+            _udpClient.Close();
         }
     }
 }

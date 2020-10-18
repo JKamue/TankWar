@@ -89,7 +89,12 @@ namespace TankWarLib
             LogMessage(clientId + " quit");
         }
 
-        private void KeepAlive(IPEndPoint client) => _clients.First(c => c.Endpoint.Equals(client)).KeepAliveReceived();
+        private void KeepAlive(IPEndPoint client)
+        {
+            var test = _clients.Where(c => c.Endpoint.Equals(client)).ToList();
+            if (test.Count == 1)
+                test[0].KeepAliveReceived();
+        }
 
         private void LogMessage(string mes, int i = 0)
         {
