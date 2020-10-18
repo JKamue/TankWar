@@ -22,10 +22,10 @@ namespace TankWarLib.Objects
         private int CheckNumber(int number)
         {
             if (number > 0)
-                return 1;
+                return 2;
 
             if (number < 0)
-                return -1;
+                return -2;
 
             return 0;
         }

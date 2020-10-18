@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TankWarLib;
 using TankWarLib.Objects;
 
 namespace TankWarGame.Screen
@@ -67,7 +68,14 @@ namespace TankWarGame.Screen
 
         private void DrawObject(Player p)
         {
-            _graphicsBuffer.Graphics.FillRectangle(new SolidBrush(p.Color), new RectangleF(p.Position, new Size(10,10)));
+            var topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 5, p.Position.Y - 8), p.Position, p.Rotation+90);
+            var topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 5, p.Position.Y + 8), p.Position, p.Rotation + 90);
+            var bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 5, p.Position.Y - 8), p.Position, p.Rotation + 90);
+            var bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 5, p.Position.Y + 8), p.Position, p.Rotation + 90);
+
+            var polygon = (new List<PointF>{topLeft, topRight, bottomRight, bottomLeft}).ToArray();
+
+            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(p.Color), polygon);
         }
     }
 }
