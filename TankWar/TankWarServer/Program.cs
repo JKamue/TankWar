@@ -14,7 +14,7 @@ namespace TankWarServer
         {
             var line1 = new Line(Color.Green, new PointF(10,10), new PointF(20,80));
             var lines = new List<Line> {line1};
-            var map = new Map(lines);
+            var map = new Map(lines, new Size(200,200));
 
             var server = new TankWarLib.TankWarServer(map, 50000, true);
             Console.WriteLine("Server started\n--------------");

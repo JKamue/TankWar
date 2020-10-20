@@ -27,7 +27,24 @@ namespace TankWarLib.Objects
         public void Tick()
         {
             Players.ForEach(p => p.Tick());
-            Bullets.ForEach(b => b.Tick());
+            BulletTick();
+        }
+
+        private void BulletTick()
+        {
+            for (int i = 0; i < Bullets.Count; i++)
+            {
+                var b = Bullets[i];
+                if (Map.Bounds.Contains(b.Position))
+                {
+                    b.Tick();
+                }
+                else
+                {
+                    Bullets.Remove(b);
+                    i--;
+                }
+            }
         }
 
         public void AddNewPlayer(string id)

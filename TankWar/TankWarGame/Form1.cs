@@ -106,7 +106,7 @@ namespace TankWarGame
         {
             var quitTheGame = new Message(MessageId.GameQuit);
             screenController._players = new List<Player>();
-            screenController.Map = new Map(new List<Line>());
+            screenController.Map = new Map(new List<Line>(), Size.Empty);
             Connection.Send(quitTheGame, ServerEndPoint);
             KeepAlive.Stop();
             btnConnect.Enabled = true;

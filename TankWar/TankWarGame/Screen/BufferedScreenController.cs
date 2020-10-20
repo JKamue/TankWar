@@ -22,7 +22,7 @@ namespace TankWarGame.Screen
 
         public List<Player> _players = new List<Player>();
         public List<Bullet> _bullets = new List<Bullet>();
-        public Map Map = new Map(new List<Line>());
+        public Map Map = new Map(new List<Line>(), Size.Empty);
 
         public BufferedScreenController(Panel panel, Color color)
         {
