@@ -77,28 +77,13 @@ namespace TankWarGame.Screen
 
         private void DrawObject(Bullet b)
         {
-            _graphicsBuffer.Graphics.FillEllipse(new SolidBrush(Color.Black), b.Position.X, b.Position.Y, 5,5);
+            _graphicsBuffer.Graphics.FillEllipse(new SolidBrush(Color.Black), b.Position.X-2, b.Position.Y-2, 4,4);
         }
 
         private void DrawObject(Player p)
         {
-            var topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 8, p.Position.Y - 15), p.Position, p.Rotation);
-            var topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 8, p.Position.Y + 15), p.Position, p.Rotation);
-            var bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 8, p.Position.Y - 15), p.Position, p.Rotation);
-            var bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 8, p.Position.Y + 15), p.Position, p.Rotation);
-
-            var polygon = (new List<PointF>{topLeft, topRight, bottomRight, bottomLeft}).ToArray();
-
-            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(p.Color), polygon);
-
-            topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 4, p.Position.Y - 4), p.Position, p.TurretRotation);
-            topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 4, p.Position.Y + 18), p.Position, p.TurretRotation);
-            bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 4, p.Position.Y - 4), p.Position, p.TurretRotation);
-            bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 4, p.Position.Y + 18), p.Position, p.TurretRotation);
-
-            polygon = (new List<PointF> { topLeft, topRight, bottomRight, bottomLeft }).ToArray();
-
-            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(Color.Gray), polygon);
+            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(p.Color), p.GetBodyPolygon().ToArray());
+            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(Color.Gray), p.GetTurretPolygon().ToArray());
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TankWarLib.Objects
         private void SetSize(int size)
         {
             Size = new Size(size, size);
-            Position = new PointF(CenterPosition.X - size / 2, CenterPosition.Y - size / 2);
+            Position = new PointF(CenterPosition.X - (float) size / 2, CenterPosition.Y - (float) size / 2);
         }
          
         public void Tick()

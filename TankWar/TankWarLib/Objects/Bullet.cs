@@ -11,10 +11,12 @@ namespace TankWarLib.Objects
     {
         public PointF Position;
         public float Direction;
-        public Bullet(PointF position, float direction)
+        public string ShooterId;
+        public Bullet(PointF position, float direction, string shooterId)
         {
             Position = position;
             Direction = direction;
+            ShooterId = shooterId;
         }
 
         public void Tick()

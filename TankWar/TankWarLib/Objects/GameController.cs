@@ -57,21 +57,41 @@ namespace TankWarLib.Objects
                     var newPosition = b.Position;
                     var bulletLine = new Line(Color.Black, lastPosition, newPosition);
                     var intersects = false;
-                    PointF intersection;
+                    PointF intersection = new PointF(-100, -100);
                     foreach (var line in Map.Lines)
                     {
                         intersection = line.GetIntersection(bulletLine);
                         if (intersection != new PointF(-100, -100))
                         {
                             intersects = true;
-                            Explosions.Add(new Explosion(intersection));
                             break;
                         }
+                    }
+                    foreach (var player in Players)
+                    {
+                        if (b.ShooterId == player.Id)
+                            continue;
+
+                        var lines = player.GetHitboxLines();
+                        foreach (var line in lines)
+                        {
+                            intersection = bulletLine.GetIntersection(line);
+                            if (intersection != new PointF(-100, -100))
+                            {
+                                player.MarkHit();
+                                intersects = true;
+                                break;
+                            }
+                        }
+
+                        if(intersects)
+                            break;
                     }
 
                     if (!intersects)
                         continue;
 
+                    Explosions.Add(new Explosion(intersection));
                 }
                 Bullets.Remove(b);
                 i--;
@@ -91,7 +111,7 @@ namespace TankWarLib.Objects
             if (_lastShot[player.Id] > DateTime.Now.Subtract(new TimeSpan(0, 0, 0, 2)))
                 return;
 
-            Bullets.Add(new Bullet(player.Position, player.TurretRotation));
+            Bullets.Add(new Bullet(player.Position, player.TurretRotation, player.Id));
             _lastShot[player.Id] = DateTime.Now;
         }
 
