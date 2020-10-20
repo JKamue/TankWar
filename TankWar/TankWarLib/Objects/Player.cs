@@ -28,7 +28,7 @@ namespace TankWarLib.Objects
 
         public void Tick()
         {
-            var positionVector = PointRotator.RotatePoint(new PointF(move, 0), new PointF(0, 0), Rotation);
+            var positionVector = PointRotator.RotatePoint(new PointF(0, move), new PointF(0, 0), Rotation);
             Position = new PointF(Position.X + positionVector.X, Position.Y + positionVector.Y);
             Rotation += turn;
             TurretRotation += turret;

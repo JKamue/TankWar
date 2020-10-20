@@ -27,6 +27,7 @@ namespace TankWarLib.Objects
         public void Tick()
         {
             Players.ForEach(p => p.Tick());
+            Bullets.ForEach(b => b.Tick());
         }
 
         public void AddNewPlayer(string id)
@@ -42,7 +43,7 @@ namespace TankWarLib.Objects
             if (_lastShot[player.Id] > DateTime.Now.Subtract(new TimeSpan(0, 0, 0, 2)))
                 return;
 
-            Bullets.Add(new Bullet(player.Position));
+            Bullets.Add(new Bullet(player.Position, player.TurretRotation));
             _lastShot[player.Id] = DateTime.Now;
         }
 
