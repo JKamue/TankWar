@@ -49,6 +49,7 @@ namespace TankWarGame
                 var positions = JsonConvert.DeserializeObject<Positions>(s.Message.Content);
                 screenController._players = positions.Players;
                 screenController._bullets = positions.Bullets;
+                screenController._explosions = positions.Explosions;
             }
 
 
@@ -106,6 +107,8 @@ namespace TankWarGame
         {
             var quitTheGame = new Message(MessageId.GameQuit);
             screenController._players = new List<Player>();
+            screenController._bullets = new List<Bullet>();
+            screenController._explosions = new List<Explosion>();
             screenController.Map = new Map(new List<Line>(), Size.Empty);
             Connection.Send(quitTheGame, ServerEndPoint);
             KeepAlive.Stop();

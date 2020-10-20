@@ -28,6 +28,21 @@ namespace TankWarLib.Objects
         {
             Players.ForEach(p => p.Tick());
             BulletTick();
+            ExplosionTick();
+        }
+
+        private void ExplosionTick()
+        {
+            for (int i = 0; i < Explosions.Count; i++)
+            {
+                Explosions[i].Tick();
+
+                if (!Explosions[i].EndOfLife())
+                    continue;
+
+                Explosions.Remove(Explosions[i]);
+                i--;
+            }
         }
 
         private void BulletTick()
@@ -37,13 +52,29 @@ namespace TankWarLib.Objects
                 var b = Bullets[i];
                 if (Map.Bounds.Contains(b.Position))
                 {
+                    var lastPosition = b.Position;
                     b.Tick();
+                    var newPosition = b.Position;
+                    var bulletLine = new Line(Color.Black, lastPosition, newPosition);
+                    var intersects = false;
+                    PointF intersection;
+                    foreach (var line in Map.Lines)
+                    {
+                        intersection = line.GetIntersection(bulletLine);
+                        if (intersection != new PointF(-100, -100))
+                        {
+                            intersects = true;
+                            Explosions.Add(new Explosion(intersection));
+                            break;
+                        }
+                    }
+
+                    if (!intersects)
+                        continue;
+
                 }
-                else
-                {
-                    Bullets.Remove(b);
-                    i--;
-                }
+                Bullets.Remove(b);
+                i--;
             }
         }
 

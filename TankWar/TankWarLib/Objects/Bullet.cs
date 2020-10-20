@@ -19,7 +19,6 @@ namespace TankWarLib.Objects
 
         public void Tick()
         {
-            var vector = new PointF(0,10);
             var turned = PointRotator.RotatePoint(new PointF(0, 10), new PointF(0, 0), Direction);
             Position.X += turned.X;
             Position.Y += turned.Y;
