@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace TankWarLib.Objects
 {
-    class GameController
+    public class GameController
     {
         public List<Player> Players { get; } = new List<Player>();
+        public List<Explosion> Explosions { get; } = new List<Explosion>();
+        public List<Bullet> Bullets { get; }  = new List<Bullet>();
+
         public Map Map { get; }
 
         private Random rnd = new Random();

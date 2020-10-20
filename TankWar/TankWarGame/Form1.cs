@@ -46,8 +46,8 @@ namespace TankWarGame
 
             if (s.Message.Id.Equals(MessageId.Positions))
             {
-                var players = JsonConvert.DeserializeObject<List<Player>>(s.Message.Content);
-                screenController._players = players;
+                var positions = JsonConvert.DeserializeObject<Positions>(s.Message.Content);
+                screenController._players = positions.Players;
             }
 
 

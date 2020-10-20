@@ -48,11 +48,14 @@
     <Compile Include="Dtos\Messages\Envelope.cs" />
     <Compile Include="Dtos\Messages\Message.cs" />
     <Compile Include="Dtos\Messages\MessageId.cs" />
+    <Compile Include="Objects\Bullet.cs" />
+    <Compile Include="Objects\Explosion.cs" />
     <Compile Include="Objects\Line.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="Objects\Movement.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\GameController.cs" />
+    <Compile Include="Objects\Positions.cs" />
     <Compile Include="PointRotator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Socket\SocketClient.cs" />

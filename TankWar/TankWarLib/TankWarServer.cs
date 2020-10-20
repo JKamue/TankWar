@@ -48,8 +48,9 @@ namespace TankWarLib
             _gameController.Tick();
 
             // Broadcast Player Information to each Player
-            var positions = JsonConvert.SerializeObject(_gameController.Players);
-            var message = new Message(MessageId.Positions, positions);
+            var positions = new Positions(_gameController.Bullets, _gameController.Explosions, _gameController.Players);
+            var positionsSerialized = JsonConvert.SerializeObject(positions);
+            var message = new Message(MessageId.Positions, positionsSerialized);
             _clients.ForEach(c => _connection.Send(message, c.Endpoint));
         }
 
