@@ -12,6 +12,7 @@ namespace TankWarServer
     {
         static void Main(string[] args)
         {
+
             var line1 = new Line(Color.Green, new PointF(10,10), new PointF(20,80));
             var lines = new List<Line> {line1};
             var map = new Map(lines, new Size(200,200));

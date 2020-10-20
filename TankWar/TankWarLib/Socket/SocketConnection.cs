@@ -47,17 +47,17 @@ namespace TankWarLib.Socket
                     Console.WriteLine(receivedIpEndPoint + ": \tPacket id " + message.Id.Content);
 
                 OnMessageReceived?.Invoke(this, new SocketEventArgs(receivedIpEndPoint, message));
+
+                // Restart listening for udp data packages
+                _udpClient.BeginReceive(DataReceived, _udpClient);
             }
             catch (SocketException e)
             {
             }
             catch (ObjectDisposedException e)
             {
-                return;
             }
 
-            // Restart listening for udp data packages
-            _udpClient.BeginReceive(DataReceived, _udpClient);
         }
 
         public void Close()
