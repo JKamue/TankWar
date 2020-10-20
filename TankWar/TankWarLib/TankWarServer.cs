@@ -58,15 +58,15 @@ namespace TankWarLib
 
             if (s.Message.Id.Equals(MessageId.GameJoined))
                 ClientJoined(s.Client);
-
-            if (s.Message.Id.Equals(MessageId.KeepAlive))
-                KeepAlive(s.Client);
-
+            
             if (s.Message.Id.Equals(MessageId.GameQuit))
                 RemoveClient(s.Client);
 
             if (s.Message.Id.Equals(MessageId.Movement))
+            {
                 SetClientMovement(s.Client, s.Message);
+                KeepAlive(s.Client);
+            }
         }
 
         private void SetClientMovement(IPEndPoint client, Message message)

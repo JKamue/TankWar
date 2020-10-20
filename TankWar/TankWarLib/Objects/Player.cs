@@ -11,13 +11,13 @@ namespace TankWarLib.Objects
     {
         public readonly string Id;
         public float Rotation = 0;
-        public int TurretRotation = 0;
+        public float TurretRotation = 0;
         public Color Color { get; }
         public PointF Position { get; private set; }
 
-        private int move = 0;
-        private int turn = 0;
-        private int targetTurret = 0;
+        private float move = 0;
+        private float turn = 0;
+        private float turret = 0;
 
         public Player(string id, PointF position, Color color)
         {
@@ -31,13 +31,7 @@ namespace TankWarLib.Objects
             var positionVector = PointRotator.RotatePoint(new PointF(move, 0), new PointF(0, 0), Rotation);
             Position = new PointF(Position.X + positionVector.X, Position.Y + positionVector.Y);
             Rotation += turn;
-
-            if (TurretRotation > targetTurret)
-                TurretRotation -= turn;
-
-            if (TurretRotation < targetTurret)
-                TurretRotation += turn;
-
+            TurretRotation += turret;
         }
 
         public void SetMovement(Movement movement)
@@ -45,7 +39,7 @@ namespace TankWarLib.Objects
             movement.CheckAllNumbers();
             move = movement.Move;
             turn = movement.Turn;
-            targetTurret = movement.Turret;
+            turret = movement.Turret;
         }
     }
 }

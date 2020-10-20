@@ -10,7 +10,6 @@ namespace TankWarLib.Dtos.Messages
     {
         // Connection Actions
         public static readonly MessageId GameJoined = new MessageId(0);
-        public static readonly MessageId KeepAlive = new MessageId(1);
         public static readonly MessageId GameQuit = new MessageId(2);
 
         // Movement Actions

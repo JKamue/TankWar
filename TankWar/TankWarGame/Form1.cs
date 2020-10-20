@@ -68,9 +68,6 @@ namespace TankWarGame
 
         private void SendKeepAlive(object sender, EventArgs e)
         {
-            var keepAliveMessage = new Message(MessageId.KeepAlive);
-            Connection.Send(keepAliveMessage, ServerEndPoint);
-
             var move = 0;
             var turn = 0;
             var turret = 0;
@@ -86,6 +83,12 @@ namespace TankWarGame
 
             if (KeyStatus.IsPressed(39))
                 turn++;
+
+            if (KeyStatus.IsPressed(68))
+                turret++;
+
+            if (KeyStatus.IsPressed(65))
+                turret--;
 
             var movement = new Movement(move, turn, turret);
             var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));

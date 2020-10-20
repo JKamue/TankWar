@@ -68,14 +68,23 @@ namespace TankWarGame.Screen
 
         private void DrawObject(Player p)
         {
-            var topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 5, p.Position.Y - 8), p.Position, p.Rotation+90);
-            var topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 5, p.Position.Y + 8), p.Position, p.Rotation + 90);
-            var bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 5, p.Position.Y - 8), p.Position, p.Rotation + 90);
-            var bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 5, p.Position.Y + 8), p.Position, p.Rotation + 90);
+            var topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 8, p.Position.Y - 15), p.Position, p.Rotation-90);
+            var topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 8, p.Position.Y + 15), p.Position, p.Rotation - 90);
+            var bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 8, p.Position.Y - 15), p.Position, p.Rotation - 90);
+            var bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 8, p.Position.Y + 15), p.Position, p.Rotation - 90);
 
             var polygon = (new List<PointF>{topLeft, topRight, bottomRight, bottomLeft}).ToArray();
 
             _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(p.Color), polygon);
+
+            topLeft = PointRotator.RotatePoint(new PointF(p.Position.X - 4, p.Position.Y - 4), p.Position, p.TurretRotation - 90);
+            topRight = PointRotator.RotatePoint(new PointF(p.Position.X - 4, p.Position.Y + 18), p.Position, p.TurretRotation - 90);
+            bottomLeft = PointRotator.RotatePoint(new PointF(p.Position.X + 4, p.Position.Y - 4), p.Position, p.TurretRotation - 90);
+            bottomRight = PointRotator.RotatePoint(new PointF(p.Position.X + 4, p.Position.Y + 18), p.Position, p.TurretRotation - 90);
+
+            polygon = (new List<PointF> { topLeft, topRight, bottomRight, bottomLeft }).ToArray();
+
+            _graphicsBuffer.Graphics.FillPolygon(new SolidBrush(Color.Gray), polygon);
         }
     }
 }

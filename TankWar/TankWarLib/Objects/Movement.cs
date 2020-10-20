@@ -8,32 +8,33 @@ namespace TankWarLib.Objects
 {
     public class Movement
     {
-        public int Move;
-        public int Turn;
-        public int Turret;
+        public float Move;
+        public float Turn;
+        public float Turret;
 
-        public Movement(int move, int turn, int turret)
+        public Movement(float move, float turn, float turret)
         {
             Move = move;
             Turn = turn;
             Turret = turret;
         }
 
-        private int CheckNumber(int number)
+        private float CheckNumber(float number, float value = 2)
         {
             if (number > 0)
-                return 2;
+                return value;
 
             if (number < 0)
-                return -2;
+                return -value;
 
             return 0;
         }
 
         public void CheckAllNumbers()
         {
-            Move = CheckNumber(Move);
+            Move = CheckNumber(Move, 0.5f);
             Turn = CheckNumber(Turn);
+            Turret = CheckNumber(Turret);
         }
     }
 }
