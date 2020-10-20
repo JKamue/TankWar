@@ -65,7 +65,7 @@ namespace TankWarGame.Screen
 
         private void DrawObject(Line l)
         {
-            _graphicsBuffer.Graphics.DrawLine(new Pen(l.Color), l.Start, l.End);
+            _graphicsBuffer.Graphics.DrawLine(new Pen(l.Color, 2), l.Start, l.End);
         }
 
         private void DrawObject(Bullet b)
