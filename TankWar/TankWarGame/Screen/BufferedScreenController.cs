@@ -21,6 +21,7 @@ namespace TankWarGame.Screen
         private Graphics _panelGraphics;
 
         public List<Player> _players = new List<Player>();
+        public List<Bullet> _bullets = new List<Bullet>();
         public Map Map = new Map(new List<Line>());
 
         public BufferedScreenController(Panel panel, Color color)
@@ -52,7 +53,8 @@ namespace TankWarGame.Screen
         {
             _graphicsBuffer.Graphics.Clear(_color);
             DrawObject(Map);
-            _players.ForEach(p => DrawObject(p));
+            _players.ForEach(DrawObject);
+            _bullets.ForEach(DrawObject);
             _graphicsBuffer.Render(_panelGraphics);
         }
 
@@ -64,6 +66,11 @@ namespace TankWarGame.Screen
         private void DrawObject(Line l)
         {
             _graphicsBuffer.Graphics.DrawLine(new Pen(Color.Black), l.Start, l.End);
+        }
+
+        private void DrawObject(Bullet b)
+        {
+            _graphicsBuffer.Graphics.FillEllipse(new SolidBrush(Color.Black), b.Position.X, b.Position.Y, 5,5);
         }
 
         private void DrawObject(Player p)

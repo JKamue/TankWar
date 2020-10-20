@@ -68,18 +68,36 @@ namespace TankWarLib
                 SetClientMovement(s.Client, s.Message);
                 KeepAlive(s.Client);
             }
+
+            if (s.Message.Id.Equals(MessageId.Shoot))
+                PlayerFireShot(s.Client);
+        }
+
+        private Player GetPlayerFromClient(IPEndPoint c)
+        {
+            var id = _clientToId[c];
+            var player = _gameController.Players.Where(p => p.Id == id).ToList();
+
+            if (player.Count == 0)
+                return null;
+
+            return player[0];
+        }
+
+        private void PlayerFireShot(IPEndPoint client)
+        {
+            var player = GetPlayerFromClient(client);
+
+            if (player == null)
+                return;
+
+            _gameController.PlayerShoot(player);
         }
 
         private void SetClientMovement(IPEndPoint client, Message message)
         {
             var movement = JsonConvert.DeserializeObject<Movement>(message.Content);
-            var id = _clientToId[client];
-            var player = _gameController.Players.Where(p => p.Id == id).ToList();
-
-            if (player.Count == 0)
-                return;
-
-            player[0].SetMovement(movement);
+            GetPlayerFromClient(client)?.SetMovement(movement);
         }
 
         private void ClientJoined(IPEndPoint client)

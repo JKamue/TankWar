@@ -29,7 +29,7 @@ namespace TankWarGame
         {
             InitializeComponent();
             KeepAlive.Interval = 50;
-            KeepAlive.Tick += SendKeepAlive;
+            KeepAlive.Tick += QueryKeys;
             screenController = new BufferedScreenController(pnlGame, Color.White);
             KeyPreview = true;
             KeyDown += KeyStatus.KeyDownHandler;
@@ -48,6 +48,7 @@ namespace TankWarGame
             {
                 var positions = JsonConvert.DeserializeObject<Positions>(s.Message.Content);
                 screenController._players = positions.Players;
+                screenController._bullets = positions.Bullets;
             }
 
 
@@ -66,7 +67,7 @@ namespace TankWarGame
             KeepAlive.Start();
         }
 
-        private void SendKeepAlive(object sender, EventArgs e)
+        private void QueryKeys(object sender, EventArgs e)
         {
             var move = 0;
             var turn = 0;
@@ -93,6 +94,12 @@ namespace TankWarGame
             var movement = new Movement(move, turn, turret);
             var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));
             Connection.Send(message, ServerEndPoint);
+
+            if (KeyStatus.IsPressed(32))
+            {
+                var shoot = new Message(MessageId.Shoot);
+                Connection.Send(shoot, ServerEndPoint);
+            }
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)

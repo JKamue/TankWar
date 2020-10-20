@@ -13,6 +13,8 @@ namespace TankWarLib.Objects
         public List<Explosion> Explosions { get; } = new List<Explosion>();
         public List<Bullet> Bullets { get; }  = new List<Bullet>();
 
+        private Dictionary<string, DateTime> _lastShot { get; } = new Dictionary<string, DateTime>();
+
         public Map Map { get; }
 
         private Random rnd = new Random();
@@ -29,7 +31,19 @@ namespace TankWarLib.Objects
 
         public void AddNewPlayer(string id)
         {
-            Players.Add(new Player(id, new PointF(rnd.Next(50), rnd.Next(50)), Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256))));
+            var newPlayer = new Player(id, new PointF(rnd.Next(50), rnd.Next(50)),
+                Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+            Players.Add(newPlayer);
+            _lastShot[newPlayer.Id] = DateTime.MinValue;
+        }
+
+        public void PlayerShoot(Player player)
+        {
+            if (_lastShot[player.Id] > DateTime.Now.Subtract(new TimeSpan(0, 0, 0, 2)))
+                return;
+
+            Bullets.Add(new Bullet(player.Position));
+            _lastShot[player.Id] = DateTime.Now;
         }
 
         public void RemovePlayer(string id) => Players.RemoveAll(p => p.Id == id);
