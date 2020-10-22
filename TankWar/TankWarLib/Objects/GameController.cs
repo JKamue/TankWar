@@ -91,6 +91,9 @@ namespace TankWarLib.Objects
                         if (b.ShooterId == player.Id)
                             continue;
 
+                        if (intersects)
+                            break;
+
                         var lines = player.GetHitboxLines();
                         foreach (var line in lines)
                         {
@@ -103,8 +106,6 @@ namespace TankWarLib.Objects
                             }
                         }
 
-                        if(intersects)
-                            break;
                     }
 
                     if (!intersects)
