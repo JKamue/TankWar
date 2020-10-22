@@ -26,9 +26,23 @@ namespace TankWarLib.Objects
 
         public void Tick()
         {
-            Players.ForEach(p => p.Tick());
+            Players.ForEach(PlayerTick);
             BulletTick();
             ExplosionTick();
+        }
+
+        private void PlayerTick(Player player)
+        {
+            var otherPlayerLines = new List<Line>();
+            (Players.Where(p => p.Id != player.Id).ToList()).ForEach(p => otherPlayerLines = otherPlayerLines.Concat(p.GetBodyLines()).ToList());
+
+            if (player.IntersectsWith(Map.GetCollisionLines()) || player.IntersectsWith(otherPlayerLines))
+                player.BackTick();
+
+            player.Tick();
+
+            if (player.IntersectsWith(Map.GetCollisionLines()) || player.IntersectsWith(otherPlayerLines))
+                player.BackTick();
         }
 
         private void ExplosionTick()

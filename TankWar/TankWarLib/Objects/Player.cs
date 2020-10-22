@@ -36,6 +36,19 @@ namespace TankWarLib.Objects
         {
             stunnedTick = tick + 240;
         }
+        public bool IntersectsWith(List<Line> lines)
+        {
+            foreach (var line in lines)
+            {
+                foreach (var mapLine in GetBodyLines())
+                {
+                    if (mapLine.GetIntersection(line) != new Point(-100, -100))
+                        return true;
+                }
+            }
+
+            return false;
+        }
 
         public List<PointF> GetBodyPolygon()
         {
@@ -45,6 +58,18 @@ namespace TankWarLib.Objects
             var bottomRight = PointRotator.RotatePoint(new PointF(Position.X + 8, Position.Y + 15), Position, Rotation);
 
             return new List<PointF> {topLeft, topRight, bottomRight, bottomLeft};
+        }
+
+        public List<Line> GetBodyLines()
+        {
+            var polygon = GetBodyPolygon();
+            return new List<Line>
+            {
+                new Line(Color.White, polygon[0], polygon[1]),
+                new Line(Color.White, polygon[1], polygon[2]),
+                new Line(Color.White, polygon[2], polygon[3]),
+                new Line(Color.White, polygon[3], polygon[0])
+            };
         }
 
         public List<PointF> GetTurretPolygon()
@@ -81,6 +106,14 @@ namespace TankWarLib.Objects
             Position = new PointF(Position.X + positionVector.X, Position.Y + positionVector.Y);
             Rotation += turn;
             TurretRotation += turret;
+        }
+
+        public void BackTick()
+        {
+            var positionVector = PointRotator.RotatePoint(new PointF(0, move), new PointF(0, 0), Rotation);
+            Position = new PointF(Position.X - positionVector.X, Position.Y - positionVector.Y);
+            Rotation -= turn;
+            TurretRotation -= turret;
         }
 
         public void SetMovement(Movement movement)
