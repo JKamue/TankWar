@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,11 +12,15 @@ namespace TankWarLib.Objects
     {
         public readonly List<Line> Lines;
         public readonly Size Size;
+        public readonly int MaxPlayers;
+        public readonly List<PointF> Spawns;
 
-        public Map(List<Line> lines, Size size)
+        public Map(List<Line> lines, Size size, int maxPlayers, List<PointF> spawns)
         {
             Lines = lines;
             Size = size;
+            MaxPlayers = maxPlayers;
+            Spawns = spawns;
         }
 
         public List<Line> GetCollisionLines()

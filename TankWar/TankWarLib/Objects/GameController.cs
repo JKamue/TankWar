@@ -13,15 +13,20 @@ namespace TankWarLib.Objects
         public List<Explosion> Explosions { get; } = new List<Explosion>();
         public List<Bullet> Bullets { get; }  = new List<Bullet>();
 
+        private List<PointF> _spawns;
+
         private Dictionary<string, DateTime> _lastShot { get; } = new Dictionary<string, DateTime>();
 
         public Map Map { get; }
 
         private Random rnd = new Random();
 
+        public bool IsFull() => Map.MaxPlayers == Players.Count;
+
         public GameController(Map map)
         {
             Map = map;
+            _spawns = map.Spawns;
         }
 
         public void Tick()
@@ -114,8 +119,9 @@ namespace TankWarLib.Objects
 
         public void AddNewPlayer(string id)
         {
-            var newPlayer = new Player(id, new PointF(rnd.Next(50), rnd.Next(50)),
+            var newPlayer = new Player(id, _spawns[0],
                 Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+            _spawns.RemoveAt(0);
             Players.Add(newPlayer);
             _lastShot[newPlayer.Id] = DateTime.MinValue;
         }
@@ -129,6 +135,11 @@ namespace TankWarLib.Objects
             _lastShot[player.Id] = DateTime.Now;
         }
 
-        public void RemovePlayer(string id) => Players.RemoveAll(p => p.Id == id);
+        public void RemovePlayer(string id)
+        {
+            var player = Players.First(p => p.Id == id);
+            _spawns.Add(player.GetSpawn());
+            Players.RemoveAll(p => p.Id == id);
+        }
     }
 }

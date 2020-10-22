@@ -123,5 +123,7 @@ namespace TankWarLib.Objects
             turn = movement.Turn;
             turret = movement.Turret;
         }
+
+        public PointF GetSpawn() => _spawnPosition;
     }
 }

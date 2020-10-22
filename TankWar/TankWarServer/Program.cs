@@ -28,7 +28,12 @@ namespace TankWarServer
                 new Line(Color.DarkRed, new PointF(340,80), new PointF(340,120)),
                 new Line(Color.DarkRed, new PointF(340,220), new PointF(340,180))
             };
-            var map = new Map(lines, new Size(600,300));
+            var spawns = new List<PointF>
+            {
+                new PointF(50, 150),
+                new PointF(550, 150),
+            };
+            var map = new Map(lines, new Size(600,300), 2, spawns);
 
             var server = new TankWarLib.TankWarServer(map, 50000, true);
             Console.WriteLine("Server started\n--------------");

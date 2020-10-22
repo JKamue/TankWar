@@ -102,6 +102,9 @@ namespace TankWarLib
 
         private void ClientJoined(IPEndPoint client)
         {
+            if (_gameController.IsFull())
+                return;
+
             // Store Client
             var socketClient = new SocketClient(client);
             _clientToId[client] = socketClient.Id;
