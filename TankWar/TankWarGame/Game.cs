@@ -82,6 +82,8 @@ namespace TankWarGame
 
             if (KeyStatus.IsPressed(32))
                 _connection.Send(ShootMessage, _serverEndPoint);
+
+            Size = _screenController.Map.Size;
         }
 
         public void MessageHandler(object sender, SocketEventArgs s)
