@@ -109,7 +109,7 @@ namespace TankWarGame
             screenController._players = new List<Player>();
             screenController._bullets = new List<Bullet>();
             screenController._explosions = new List<Explosion>();
-            screenController.Map = new Map(new List<Line>(), Size.Empty);
+            screenController.Map = new Map(new List<Line>(), Size.Empty,  0, new List<PointF>());
             Connection.Send(quitTheGame, ServerEndPoint);
             KeepAlive.Stop();
             btnConnect.Enabled = true;
