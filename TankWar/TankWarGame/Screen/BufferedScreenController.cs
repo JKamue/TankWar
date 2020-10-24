@@ -41,6 +41,11 @@ namespace TankWarGame.Screen
             _panel.SizeChanged += PanelResizeEvent;
         }
 
+        public void Close()
+        {
+            _timer.Stop();
+        }
+
         public void PanelResizeEvent(object sender, EventArgs e) => SetupGraphics();
 
         public void SetupGraphics()

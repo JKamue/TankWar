@@ -62,8 +62,8 @@ namespace TankWarLib.Socket
 
         public void Close()
         {
-            _udpClient.Client.Shutdown(SocketShutdown.Receive);
-            _udpClient.Client.Close();
+            _udpClient.Client?.Shutdown(SocketShutdown.Both);
+            _udpClient.Client?.Close();
             _udpClient.Close();
         }
     }

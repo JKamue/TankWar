@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,6 +76,17 @@ namespace TankWarGame
 
             if (KeyStatus.IsPressed(65))
                 turret--;
+
+            if (KeyStatus.IsPressed(27))
+            {
+                _connection.Send(new Message(MessageId.GameQuit, ""), _serverEndPoint);
+                KeyStatus.KeyUpHander(this, new KeyEventArgs(Keys.Escape));
+                _connection.Close();
+                _screenController.Close();
+                Close();
+                Application.ExitThread();
+                return;
+            }
 
             var movement = new Movement(move, turn, turret);
             var message = new Message(MessageId.Movement, JsonConvert.SerializeObject(movement));
