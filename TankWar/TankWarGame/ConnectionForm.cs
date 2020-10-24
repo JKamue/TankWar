@@ -28,32 +28,25 @@ namespace TankWarGame
                 return;
             }
 
-            var port = Decimal.ToInt32(nbxServerPort.Value);
+            var port = decimal.ToInt32(nbxServerPort.Value);
 
-            var ownPort = 50101;
-            while (!PortAvailable(ownPort))
+            // https://stackoverflow.com/a/5879681/14181760
+            var startingAtPort = 50100;
+            var maxNumberOfPortsToCheck = 500;
+            var range = Enumerable.Range(startingAtPort, maxNumberOfPortsToCheck);
+            var portsInUse =
+                from p in range
+                join used in System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners()
+                    on p equals used.Port
+                select p;
+
+            var FirstFreeUDPPortInRange = range.Except(portsInUse).FirstOrDefault();
+
+            if (FirstFreeUDPPortInRange > 0)
             {
-                ownPort += 1;
+                var form = new Game(serverIp, port, FirstFreeUDPPortInRange);
+                form.Show();
             }
-            
-            var form = new Game(serverIp, port, ownPort);
-            form.Show();
-        }
-
-        private bool PortAvailable(int port)
-        {
-            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-            TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
-
-            foreach (TcpConnectionInformation tcpi in tcpConnInfoArray)
-            {
-                if (tcpi.LocalEndPoint.Port == port)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }

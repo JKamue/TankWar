@@ -36,7 +36,7 @@ namespace TankWarGame
         public Game(IPAddress serverAddress, int port, int ownPort)
         {
             // Ready
-            _connection = new SocketConnection(50001);
+            _connection = new SocketConnection(ownPort);
             _serverEndPoint = new IPEndPoint(serverAddress, port);
             _updater.Tick += QueryKeys;
 
@@ -95,7 +95,8 @@ namespace TankWarGame
             if (KeyStatus.IsPressed(32))
                 _connection.Send(ShootMessage, _serverEndPoint);
 
-            Size = _screenController.Map.Size;
+            Height = _screenController.Map.Size.Height + 40;
+            Width = _screenController.Map.Size.Width;
         }
 
         public void MessageHandler(object sender, SocketEventArgs s)

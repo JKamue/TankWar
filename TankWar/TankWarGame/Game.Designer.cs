@@ -35,17 +35,19 @@
             // 
             this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlGame.Location = new System.Drawing.Point(0, 0);
+            this.pnlGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlGame.Name = "pnlGame";
-            this.pnlGame.Size = new System.Drawing.Size(800, 450);
+            this.pnlGame.Size = new System.Drawing.Size(1067, 554);
             this.pnlGame.TabIndex = 0;
             // 
             // Game
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.pnlGame);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Game";
             this.Text = "Game";
             this.ResumeLayout(false);
